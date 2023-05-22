@@ -12,7 +12,8 @@ class PeopleTable extends React.Component {
             lastName: '',
             age: '',
             cars: []
-        }
+        },
+        searchBox: ''
     }
 
     componentDidMount = async () => {
@@ -25,10 +26,30 @@ class PeopleTable extends React.Component {
         this.setState({people});
     }
 
-    render() {
+    onClearSearchBoxClick = () => {
+        this.setState({ searchBox: '' })
+        this.refreshPeople();
+    }
+
+    onSearchBoxTextChange = (e) => {
+        this.setState({ searchBox: e.target.value });
         const { people } = this.state;
+        const filteredPeople = people.filter(p => p.firstName.includes(e.target.value) || p.lastName.includes(e.target.value));
+        this.setState({ people: filteredPeople });
+    }
+
+    render() {
+        const { people, searchBox } = this.state;
         return (
             <div className="container" style={{ marginTop: 60 }}>
+                <div className="row">
+                    <div className="col-md-10">
+                        <input onChange={this.onSearchBoxTextChange} type="text" className="form-control form-control-lg" placeholder="Search People" value={searchBox} />
+                    </div>
+                    <div className="col-md-2">
+                        <button onClick={this.onClearSearchBoxClick} className="btn btn-dark btn-lg w-100">Clear</button>
+                    </div>
+                </div>
 
                 <Link to={`/addpersonform`}>
                     <button className="btn btn-success btn-lg w-100">Add Person</button>
