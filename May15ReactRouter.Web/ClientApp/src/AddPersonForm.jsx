@@ -14,11 +14,11 @@ class AddPersonForm extends React.Component {
     onTextChange = e => {
         const copy = { ...this.state.person };
         copy[e.target.name] = e.target.value;
-        this.setState({ car: copy });
+        this.setState({ person: copy });
     }
 
     onAddPersonClick = async () => {
-        await axios.post('/api/people/addperson', this.state.person);
+        await axios.post('/api/peoplecars/addperson', this.state.person);
         this.props.history.push('/');
     }
 
@@ -28,11 +28,11 @@ class AddPersonForm extends React.Component {
         < div className="row" >
             <div className="col-md-6 offset-md-3 card bg-light p-4">
                 <h2>Add a New Person</h2>
-                <input type="text" onChange={this.onTextChange} value={firstName} className="form-control" name="firstName" placeholder="First Name" value="" />
+                <input type="text" onChange={this.onTextChange} value={firstName} className="form-control" name="firstName" placeholder="First Name" />
                 <br />
-                <input type="text" onChange={this.onTextChange} value={lastName} className="form-control" name="lastName" placeholder="Last Name" value="" />
+                <input type="text" onChange={this.onTextChange} value={lastName} className="form-control" name="lastName" placeholder="Last Name" />
                 <br />
-                <input type="text" onChange={this.onTextChange} value={age} className="form-control" name="age" placeholder="Age" value="" />
+                <input type="text" onChange={this.onTextChange} value={age} className="form-control" name="age" placeholder="Age"/>
                 <br />
                 <button onClick={this.onAddPersonClick} className="btn btn-primary btn-lg btn-block">Submit</button>
             </div>

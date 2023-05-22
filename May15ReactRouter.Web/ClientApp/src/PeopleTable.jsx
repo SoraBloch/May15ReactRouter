@@ -12,8 +12,7 @@ class PeopleTable extends React.Component {
             lastName: '',
             age: '',
             cars: []
-        },
-        currentPersonId: ''
+        }
     }
 
     componentDidMount = async () => {
@@ -23,7 +22,7 @@ class PeopleTable extends React.Component {
     refreshPeople = async () => {
         const response = await axios.get('/api/peoplecars/getallpeople');
         const people = response.data;
-        this.setState({ people });
+        this.setState({people});
     }
 
     render() {
@@ -50,6 +49,7 @@ class PeopleTable extends React.Component {
                         {people.map(p => <PersonRow
                             key={p.id}
                             person={p}
+                            currentPersonId={p.id}
                             amountOfCars={p.cars.length}
                         />)}
                     </tbody>
@@ -60,3 +60,4 @@ class PeopleTable extends React.Component {
 }
 
 export default PeopleTable;
+

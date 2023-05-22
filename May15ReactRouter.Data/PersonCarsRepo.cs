@@ -36,7 +36,7 @@ namespace May15ReactRouter.Data
         public void DeleteCarsForPerson(int personId)
         {
             using var context = new PeopleCarsDataContext(_connectionString);
-            context.Database.ExecuteSqlInterpolated($"DELETE FROM People WHERE Id = {personId}");
+            context.Database.ExecuteSqlInterpolated($"DELETE FROM Cars WHERE PersonId = {personId}");
         }
         public Person GetPersonById(int id)
         {

@@ -24,10 +24,10 @@ namespace May15ReactRouter.Web.Controllers
         }
         [HttpGet]
         [Route("getallcarsforperson")]
-        public List<Car> GetAllCarsForPerson(PersonIdViewModel vm)
+        public List<Car> GetAllCarsForPerson(int personId)
         {
             var repo = new PersonCarsRepo(_connectionString);
-            return repo.GetAllCarsForPerson(vm.PersonId);
+            return repo.GetAllCarsForPerson(personId);
         }
         [HttpPost]
         [Route("addperson")]
@@ -45,17 +45,17 @@ namespace May15ReactRouter.Web.Controllers
         }
         [HttpPost]
         [Route("deletecarsforperson")]
-        public void DeleteCarsForPerson(PersonIdViewModel vm)
+        public void DeleteCarsForPerson(int personId)
         {
             var repo = new PersonCarsRepo(_connectionString);
-            repo.DeleteCarsForPerson(vm.PersonId);
+            repo.DeleteCarsForPerson(personId);
         }
         [HttpGet]
         [Route("getpersonbyid")]
-        public Person GetPersonById(PersonIdViewModel vm)
+        public Person GetPersonById(int personId)
         {
             var repo = new PersonCarsRepo(_connectionString);
-            return repo.GetPersonById(vm.PersonId);
+            return repo.GetPersonById(personId);
         }
 
     }

@@ -1,10 +1,9 @@
 ﻿import React from 'react';
-import { Link } from 'react-router-dom';
 
-function CarRow({ make, model, year }) {
+function CarRow({ car }) {
+    const { make, model, year } = car;
     return (
         <tr>
-
             <td>{make}</td>
             <td>{model}</td>
             <td>{year}</td>
