@@ -6,7 +6,8 @@ import CarRow from './CarRow'
 class DeleteCars extends React.Component {
     state = {
         cars: [],
-        searchBox: ''
+        searchBox: '',
+        searchCars: []
     }
 
     componentDidMount = async () => {
@@ -16,8 +17,7 @@ class DeleteCars extends React.Component {
     refreshCars = async () => {
         const { id } = this.props.match.params;
         const { data } = await axios.get(`/api/peoplecars/getallcarsforperson?personId=${id}`);
-        console.log(data);
-        this.setState({ cars: data, currentPersonId: id });
+        this.setState({ cars: data, currentPersonId: id, searchCars: data });
     }
 
     onDeleteCarsClick = async () => {
@@ -28,20 +28,19 @@ class DeleteCars extends React.Component {
     }
 
     onClearSearchBoxClick = () => {
-        this.setState({ searchBox: '' });
-        this.refreshCars();
+        this.setState({ searchBox: '', searchCars: this.state.cars });
     }
 
     onSearchBoxTextChange = (e) => {
         const { cars } = this.state;
         this.setState({ searchBox: e.target.value });
         const filteredCars = cars.filter(c => c.make.includes(e.target.value) || c.model.includes(e.target.value));
-        this.setState({ cars: filteredCars });
+        this.setState({ searchCars: filteredCars });
     }
 
 
     render() {
-        const { cars, searchBox } = this.state;
+        const { cars, searchBox, searchCars } = this.state;
         return (
             <>
                 <div className="row">
@@ -63,7 +62,7 @@ class DeleteCars extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {cars.map(c => <CarRow
+                                {searchCars.map(c => <CarRow
                                     key={c.id}
                                     car={c}
                                 />)}

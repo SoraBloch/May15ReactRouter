@@ -13,6 +13,7 @@ class PeopleTable extends React.Component {
             age: '',
             cars: []
         },
+        searchedPeople: [],
         searchBox: ''
     }
 
@@ -23,23 +24,22 @@ class PeopleTable extends React.Component {
     refreshPeople = async () => {
         const response = await axios.get('/api/peoplecars/getallpeople');
         const people = response.data;
-        this.setState({people});
+        this.setState({people, searchedPeople: people});
     }
 
     onClearSearchBoxClick = () => {
-        this.setState({ searchBox: '' })
-        this.refreshPeople();
+        this.setState({ searchBox: '', searchedPeople: this.state.people })
     }
 
     onSearchBoxTextChange = (e) => {
         this.setState({ searchBox: e.target.value });
         const { people } = this.state;
         const filteredPeople = people.filter(p => p.firstName.includes(e.target.value) || p.lastName.includes(e.target.value));
-        this.setState({ people: filteredPeople });
+        this.setState({ searchedPeople: filteredPeople });
     }
 
     render() {
-        const { people, searchBox } = this.state;
+        const { searchedPeople, searchBox } = this.state;
         return (
             <div className="container" style={{ marginTop: 60 }}>
                 <div className="row">
@@ -67,7 +67,7 @@ class PeopleTable extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {people.map(p => <PersonRow
+                        {searchedPeople.map(p => <PersonRow
                             key={p.id}
                             person={p}
                             currentPersonId={p.id}
